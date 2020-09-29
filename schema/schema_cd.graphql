@@ -1,0 +1,90 @@
+"""
+As a new or modification to Customer is processed, it will go through a number of states. This type stores possible states
+"""
+type State{ 
+  name: String! @id @search(by: [hash,term])
+  url: String
+}
+"""
+The Customer is processed by a state machine defined by Transitions. Each Transition consists of an externally triggered event that moves a process to a new state
+"""
+type Transition{
+  eventName: String! @id @search(by: [hash,term]) 
+  fromState : State
+  toState: State
+}
+
+
+"""
+The history of mutations to customer data is stored in this type
+"""
+type CustomerHistory {
+  id: ID!
+  name: String @search(by: [hash,term]) 
+  title: String @search(by: [hash,term]) 
+  comments: String @search(by: [hash,term]) 	 
+  byState: State
+}
+
+interface CustomerBase{
+    id: ID!
+    name: String @search(by: [hash,term])
+    title: String @search(by: [hash,term])
+    comments: String @search(by: [hash,term])
+}
+"""
+Customers that trade with a company
+"""
+type Customer implements CustomerBase{
+  process: Process
+  history: [CustomerHistory]
+}
+
+"""
+This node stores the process steps and history for managing customer data
+"""
+type Process{
+  id:ID!
+  customer: Customer
+  name: String! @search(by: [hash,term]) 
+  lastState: State
+  lastEventName: String @search(by: [hash,term]) 
+  nextStep: String
+  history: [State]
+}
+
+type Mutation {
+"""
+Adds a new customer initiates a new process
+"""
+    processNewCustomer(title: String, name: String): Process @custom(http:{
+        url: "http://localhost:5050/processNewCustomer"
+        method: "POST",
+        body: "{ title: $title, name: $name }" 
+    })
+"""
+Validates a customer's name
+"""
+    validateCustomerName(processId: String, customerName: String): Process @custom(http:{
+        url: "http://localhost:5050/validateCustomerName"
+        method: "POST",
+        body: "{ processId: $processId, customerName: $customerName }" 
+    })
+"""
+Standardizes a title
+"""
+    standardizeTitle(processId: String, customerId:String, customerTitle: String): Process @custom(http:{
+        url: "http://localhost:3000/standardizeTitle"
+        method: "POST",
+        body: "{ processId: $processId,customerId: $customerId, customerTitle: $customerTitle }"
+	forwardHeaders: ["Content-Type"]
+    })
+"""
+Calculate the next step for a given process and save it in the process type
+"""
+    calculateNextStep(processId: String): Process @custom(http:{
+        url: "http://localhost:5050/calculateNextStep"
+        method: "POST",
+        body: "{ processId: $processId }" 
+    })
+}

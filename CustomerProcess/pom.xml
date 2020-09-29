@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>io.dgraph</groupId>
+	<artifactId>TwitterEnricher</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.javalin</groupId>
+			<artifactId>javalin</artifactId>
+			<version>3.9.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.8.0-beta4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.10.3</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.12</version>
+		</dependency>
+		<dependency>
+			<groupId>io.dgraph</groupId>
+			<artifactId>dgraph4j</artifactId>
+			<version>20.03.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.apollographql.apollo/apollo-api-jvm -->
+		<dependency>
+			<groupId>com.apollographql.apollo</groupId>
+			<artifactId>apollo-api-jvm</artifactId>
+			<version>2.2.3</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.apollographql.apollo/apollo-runtime -->
+		<dependency>
+			<groupId>com.apollographql.apollo</groupId>
+			<artifactId>apollo-runtime</artifactId>
+			<version>2.2.3</version>
+		</dependency>
+
+
+
+	</dependencies>
+</project>
